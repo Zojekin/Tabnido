@@ -1,3 +1,4 @@
+import './preview-fallback';
 import { createRoot } from 'react-dom/client';
 import { App } from './App';
 import './popup.css';

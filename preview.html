@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tabnido · 界面与动效预览</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 32px 20px;
+      background: #f0f2f5;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
+    .preview-header {
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    .preview-header h1 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      font-weight: 700;
+      color: #111;
+    }
+    .preview-header p {
+      margin: 0;
+      font-size: 14px;
+      color: #666;
+    }
+    .browser-bar {
+      width: 420px;
+      background: #ffffff;
+      border: 1px solid #e0e0e0;
+      border-radius: 12px 12px 0 0;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+      box-sizing: border-box;
+    }
+    .browser-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #888;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .browser-toolbar-action {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #444;
+    }
+    .action-icon-wrapper {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      background: #f4f4f4;
+    }
+    .action-badge {
+      position: absolute;
+      right: -4px;
+      bottom: -4px;
+      height: 16px;
+      padding: 0 4px;
+      min-width: 14px;
+      border-radius: 8px;
+      background: #747474;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      line-height: 16px;
+      text-align: center;
+      font-family: Consolas, monospace;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+      transition: background-color 0.2s, color 0.2s;
+    }
+    .popup-frame-wrapper {
+      background: #ffffff;
+      border: 1px solid #e0e0e0;
+      border-top: none;
+      border-radius: 0 0 12px 12px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      width: 420px;
+      display: flex;
+      justify-content: center;
+    }
+    iframe {
+      border: 0;
+      width: 388px;
+      height: 423px;
+      display: block;
+      background: #fff;
+    }
+    .tips-card {
+      margin-top: 24px;
+      max-width: 420px;
+      background: #fff;
+      border: 1px solid #e4e7eb;
+      border-radius: 10px;
+      padding: 16px 20px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #555;
+      box-sizing: border-box;
+    }
+    .tips-card strong {
+      color: #111;
+    }
+  </style>
+</head>
+<body>
+  <div class="preview-header">
+    <h1>Tabnido 本地独立交互预览</h1>
+    <p>包含：0.88 等比缩小、克制微动效、1~60 分钟自动关闭、工具栏角标联动</p>
+  </div>
+
+  <div class="browser-bar">
+    <div class="browser-title">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+      <span>浏览器工具栏状态模拟</span>
+    </div>
+    <div class="browser-toolbar-action">
+      <span>插件图标角标：</span>
+      <div class="action-icon-wrapper">
+        <svg width="18" height="18" viewBox="0 0 315 189" fill="#111"><path d="M 459.231 142.563 C 486.672 140.447 536.258 141.916 564.98 141.916 L 768.55 141.932 L 933.537 141.903 C 969.697 141.9 1008.25 140.121 1043.91 145.384 C 1146.02 160.452 1228.68 237.284 1247.34 339.361 C 1256.56 374.725 1242.2 374.236 1212.88 373.177 C 1117.33 369.728 1028.13 381.252 946.134 435.763 C 867.012 488.366 812.722 577.007 810.619 673.546 C 809.548 722.652 814.612 777.148 804.896 825.236 C 794.962 868.44 774.233 908.419 744.648 941.435 C 703.059 987.938 641.311 1021.54 578.729 1023.43 C 541.846 1023.88 504.932 1024.56 467.999 1023.95 C 426.992 1022.45 383.753 1027.46 343.322 1019.46 C 270.039 1004.95 212.539 945.057 211.136 868.721 C 210.494 833.791 210.723 799.571 210.727 764.964 L 210.751 570.775 L 210.73 441.153 C 210.691 407.789 208.949 365.564 215.482 333.561 C 223.694 293.149 242.733 255.729 270.563 225.299 C 319.57 171.3 387.53 145.983 459.231 142.563 z"/></svg>
+        <span class="action-badge" id="badgeIndicator">1h</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="popup-frame-wrapper">
+    <iframe id="previewFrame" src="./dist/popup.html"></iframe>
+  </div>
+
+  <div class="tips-card">
+    <strong>💡 使用提示：</strong><br />
+    1. 此页面完全不需要启动任何后端或 Node 服务，双击即可直接预览。<br />
+    2. 下方弹窗为真实构建出的 <code>dist/popup.html</code>，已等比缩放为 388×423px。<br />
+    3. 点击下方弹窗内的开关（开启/暂停）或修改时长单位，上方工具栏图标角标会即时联动（显示 <code>OFF</code> 或 <code>15m</code>、<code>1h</code>、<code>1mo</code>）。
+  </div>
+
+  <script>
+    // 在 iframe 加载前注入 Chrome Mock 运行环境，完全无需后台插件进程
+    const frame = document.getElementById('previewFrame');
+    const badge = document.getElementById('badgeIndicator');
+
+    let state = {
+      ui_language: 'zh-CN',
+      ui_theme: 'light',
+      inactive_tabs_settings: { value: 1, unit: 'hours' },
+      inactive_tabs_threshold_disabled: false,
+      total_auto_closed_tabs_count: 128,
+      whitelisted_domains: [
+        { id: '1', domain: 'notion.so', matchMode: 'mode_subdomain' },
+        { id: '2', domain: 'mail.google.com', matchMode: 'mode_exact' }
+      ],
+      user_settings: { excludePinnedTabs: true, excludeAudioTabs: true, showArchiveOverlay: true },
+      archived_tabs: [
+        { id: 'a', title: 'React 官方文档 · 组件生命周期', url: 'https://react.dev', closedAt: Date.now() - 600000 },
+        { id: 'b', title: 'Figma 设计系统规范', url: 'https://figma.com', closedAt: Date.now() - 1200000 }
+      ]
+    };
+
+    function updateBadgeView(text, color) {
+      if (!badge) return;
+      badge.textContent = text;
+      badge.style.backgroundColor = color || '#747474';
+    }
+
+    window.syncFromChild = function(type, body) {
+      if (type === 'saveInactiveTabsSettings') {
+        state.inactive_tabs_settings = body;
+        if (!state.inactive_tabs_threshold_disabled) {
+          const unitMap = { minutes: 'm', hours: 'h', days: 'd', months: 'mo' };
+          updateBadgeView(body.value + (unitMap[body.unit] || 'm'), '#111111');
+        }
+      } else if (type === 'saveInactivityDisabledState') {
+        state.inactive_tabs_threshold_disabled = body;
+        if (body) {
+          updateBadgeView('OFF', '#747474');
+        } else {
+          const s = state.inactive_tabs_settings;
+          const unitMap = { minutes: 'm', hours: 'h', days: 'd', months: 'mo' };
+          updateBadgeView(s.value + (unitMap[s.unit] || 'm'), '#111111');
+        }
+      }
+    };
+  </script>
+</body>
+</html>
