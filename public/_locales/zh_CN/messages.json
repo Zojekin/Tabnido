@@ -1,0 +1,8 @@
+{
+  "extName": {
+    "message": "Tabnido：自动关闭闲置标签页"
+  },
+  "extDescription": {
+    "message": "自动关闭闲置标签，并从可搜索的归档中恢复。本地版。"
+  }
+}

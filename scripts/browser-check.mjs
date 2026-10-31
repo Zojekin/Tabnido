@@ -1,0 +1,38 @@
+import {createRequire} from 'node:module';
+import {resolve} from 'node:path';
+import {mkdir,writeFile} from 'node:fs/promises';
+import assert from 'node:assert/strict';
+const require=createRequire('C:/Users/Zojekin/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/package.json');
+const {chromium}=require('playwright');
+const extension=resolve('dist');await mkdir('qa/shots',{recursive:true});
+const context=await chromium.launchPersistentContext(resolve('qa/browser-profile'),{headless:true,executablePath:'C:/Users/Zojekin/AppData/Local/ms-playwright/chromium-1234/chrome-win64/chrome.exe',viewport:{width:440,height:480},deviceScaleFactor:2,args:[`--disable-extensions-except=${extension}`,`--load-extension=${extension}`,'--use-mock-keychain','--password-store=basic']});
+try{
+ const worker=context.serviceWorkers()[0]??await context.waitForEvent('serviceworker',{timeout:15000});const id=worker.url().split('/')[2];
+ const page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto(`chrome-extension://${id}/popup.html`);await page.waitForSelector('.duration');
+ await page.evaluate(()=>chrome.storage.local.set({ui_language:'zh-CN',ui_theme:'light',inactive_tabs_threshold_disabled:false,inactive_tabs_settings:{value:1,unit:'hours'},total_auto_closed_tabs_count:128,whitelisted_domains:[{id:'1',domain:'notion.so',matchMode:'mode_subdomain'},{id:'2',domain:'mail.google.com',matchMode:'mode_exact'},{id:'3',domain:'docs.notion.so/workspaces/project',matchMode:'mode_exact'}],archived_tabs:[{id:'react',title:'React · Thinking in React',url:'https://react.dev/learn/thinking-in-react',closedAt:Date.now()},{id:'figma',title:'Figma — Design systems',url:'https://figma.com/design/systems',closedAt:Date.now()-10000},{id:'arena',title:'A quieter place to work',url:'https://are.na/editorial/a-quieter-place',closedAt:Date.now()-100000}],user_settings:{excludePinnedTabs:true,excludeAudioTabs:true,showArchiveOverlay:true}}));
+ await page.reload();await page.waitForSelector('.duration');await page.screenshot({path:'qa/shots/home.png'});
+ const stored=()=>page.evaluate(()=>chrome.storage.local.get(null));
+ await page.getByRole('button',{name:'增加时长',exact:true}).click();await page.waitForFunction(async()=>(await chrome.storage.local.get('inactive_tabs_settings')).inactive_tabs_settings.value===2);
+ await page.locator('.duration').fill('23');await page.waitForFunction(async()=>(await chrome.storage.local.get('inactive_tabs_settings')).inactive_tabs_settings.value===23);assert(await page.getByRole('button',{name:'增加时长',exact:true}).isDisabled());
+ await page.locator('.duration').fill('99');await page.locator('.duration').press('Tab');assert.equal((await stored()).inactive_tabs_settings.value,23);assert.equal(await page.locator('.duration').inputValue(),'23');
+ await page.locator('.duration').fill('12');await page.locator('.duration').focus();await page.screenshot({path:'qa/shots/home-focus.png'});await page.locator('.duration').press('Tab');
+ await page.getByRole('radio').nth(0).check();await page.waitForFunction(async()=>(await chrome.storage.local.get('inactive_tabs_settings')).inactive_tabs_settings.unit==='minutes');assert.equal((await stored()).inactive_tabs_settings.value,15);
+ await page.getByRole('switch').click();await page.waitForFunction(async()=>(await chrome.storage.local.get('inactive_tabs_threshold_disabled')).inactive_tabs_threshold_disabled===true);
+ await page.reload();await page.waitForSelector('.duration');assert.equal(await page.locator('.duration').inputValue(),'15');assert.equal(await page.getByRole('switch').isChecked(),false);
+ await page.getByRole('button',{name:'白名单',exact:true}).click();await page.waitForSelector('.rule');await page.screenshot({path:'qa/shots/whitelist.png'});
+ await page.locator('.domain-field input').first().fill('example.org');await page.locator('.domain-field input').first().press('Enter');await page.waitForFunction(async()=>(await chrome.storage.local.get('whitelisted_domains')).whitelisted_domains[0].domain==='example.org');
+ await page.locator('.mode-trigger').last().click();await page.screenshot({path:'qa/shots/whitelist-menu.png'});const rect=await page.locator('.mode-menu').boundingBox();assert(rect.y>=0&&rect.y+rect.height<=480);
+ await page.getByRole('menuitemradio',{name:'精确',exact:true}).click();
+ await page.getByRole('button',{name:'添加规则',exact:true}).click();await page.locator('.domain-field input').last().fill('added.example.com');await page.locator('.domain-field input').last().press('Enter');await page.waitForFunction(async()=>(await chrome.storage.local.get('whitelisted_domains')).whitelisted_domains.length===4);
+ await page.getByRole('button',{name:'删除',exact:true}).last().click();await page.waitForFunction(async()=>(await chrome.storage.local.get('whitelisted_domains')).whitelisted_domains.length===3);
+ await page.getByRole('button',{name:'归档',exact:true}).click();await page.waitForSelector('.archive-row');await page.screenshot({path:'qa/shots/archive.png'});
+ await page.locator('.search').fill('Figma');assert.equal(await page.locator('.archive-row').count(),1);await page.locator('.search').fill('missing-query');assert.equal(await page.locator('.archive-row').count(),0);await page.screenshot({path:'qa/shots/archive-empty.png'});
+ await page.locator('.search').fill('Figma');await page.getByRole('button',{name:'恢复',exact:true}).click();await page.waitForFunction(async()=>(await chrome.storage.local.get('archived_tabs')).archived_tabs.length===2);await page.waitForFunction(async()=>(await chrome.tabs.query({})).some(t=>(t.url??t.pendingUrl??'').includes('figma.com')));
+ await page.getByRole('button',{name:'设置',exact:true}).click();await page.waitForSelector('.prefs-row');await page.screenshot({path:'qa/shots/settings.png'});await page.getByRole('switch').first().click();await page.waitForFunction(async()=>(await chrome.storage.local.get('user_settings')).user_settings.excludePinnedTabs===false);
+ await page.reload();await page.getByRole('button',{name:'设置',exact:true}).click();await page.waitForSelector('.prefs-row');assert.equal(await page.getByRole('switch').first().isChecked(),false);
+ await page.getByRole('button',{name:'切换深色模式',exact:true}).click();await page.screenshot({path:'qa/shots/settings-dark.png'});
+ await page.locator('header select').selectOption('en');await page.screenshot({path:'qa/shots/settings-en.png'});
+ const dims=await page.evaluate(()=>({width:document.documentElement.scrollWidth,height:document.documentElement.scrollHeight}));assert.deepEqual(dims,{width:440,height:480});assert.deepEqual(errors,[]);
+ await writeFile('qa/browser-report.json',JSON.stringify({status:'PASS',extensionId:id,checks:['real MV3 service worker','duration autosave, boundaries, unit clamp, pause and reopen','inline whitelist edit, add, delete, dropdown bounds','archive search and real tabs.create restore','settings storage persistence','dark theme and English layout','440x480 no overflow','no page errors'],screenshots:9},null,2));console.log('PASS: real unpacked extension UI and persistence acceptance.');
+}finally{await context.close()}

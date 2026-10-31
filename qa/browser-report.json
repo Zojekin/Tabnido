@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "extensionId": "jgfhlhjniapackoeoghlcigccdfkigma",
+  "checks": [
+    "real MV3 service worker",
+    "duration autosave, boundaries, unit clamp, pause and reopen",
+    "inline whitelist edit, add, delete, dropdown bounds",
+    "archive search and real tabs.create restore",
+    "settings storage persistence",
+    "dark theme and English layout",
+    "440x480 no overflow",
+    "no page errors"
+  ],
+  "screenshots": 9
+}

@@ -1,0 +1,8 @@
+{
+  "extName": {
+    "message": "Tabnido: Auto Close Inactive Tabs"
+  },
+  "extDescription": {
+    "message": "Automatically close inactive tabs and restore them from a searchable archive. Local edition."
+  }
+}

@@ -1,0 +1,262 @@
+:host {
+  all: initial;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Floating Pill Button - Pure Monochrome HeroUI */
+.toggle {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 2147483647;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border: 1px solid #e4e4e7;
+  border-radius: 9999px;
+  background: #ffffff;
+  color: #09090b;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', 'Microsoft YaHei',
+    sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: transform 0.16s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.12s ease,
+    background 0.12s ease;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.toggle:hover {
+  transform: scale(1.03);
+  border-color: #09090b;
+}
+
+.toggle:active {
+  transform: scale(0.96);
+}
+
+.toggle.dragging {
+  cursor: grabbing;
+  transform: none;
+  transition: none;
+}
+
+.toggle svg {
+  display: block;
+  width: 16px;
+  height: 16px;
+  color: #09090b;
+}
+
+.toggle-label {
+  letter-spacing: -0.01em;
+}
+
+/* Drawer Panel - Pure Monochrome */
+.panel {
+  position: fixed;
+  bottom: 64px;
+  right: 16px;
+  z-index: 2147483647;
+  display: none;
+  flex-direction: column;
+  width: min(380px, calc(100vw - 32px));
+  height: min(480px, calc(100vh - 96px));
+  overflow: hidden;
+  border: 1px solid #e4e4e7;
+  border-top: 3px solid #09090b;
+  border-radius: 16px;
+  background: #ffffff;
+  color: #09090b;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', 'Microsoft YaHei',
+    sans-serif;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.panel.open {
+  display: flex;
+  transform-origin: bottom right;
+  animation: panel-pop 180ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes panel-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel.open {
+    animation: none;
+  }
+}
+
+.panel-header {
+  flex-shrink: 0;
+  padding: 14px 16px;
+  background: #fafafa;
+  border-bottom: 1px solid #e4e4e7;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #09090b;
+}
+
+.panel-search {
+  flex-shrink: 0;
+  padding: 10px 14px;
+  border-bottom: 1px solid #f4f4f5;
+  background: #ffffff;
+}
+
+.search-input {
+  width: 100%;
+  height: 38px;
+  padding: 8px 12px;
+  border: 1px solid #e4e4e7;
+  border-radius: 10px;
+  background: #fafafa;
+  color: #09090b;
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.4;
+  outline: none;
+  transition: border-color 120ms ease;
+}
+
+.search-input::placeholder {
+  color: #a1a1aa;
+}
+
+.search-input:focus {
+  border-color: #09090b;
+  background: #ffffff;
+}
+
+.list {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: #ffffff;
+}
+
+.row {
+  display: block;
+  width: 100%;
+  padding: 10px 16px;
+  border: none;
+  border-bottom: 1px solid #f4f4f5;
+  background: #ffffff;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background 120ms ease;
+}
+
+.row:hover {
+  background: #f4f4f5;
+}
+
+.row-title {
+  display: block;
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #09090b;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.row-url {
+  display: block;
+  overflow: hidden;
+  font-size: 11px;
+  line-height: 1.4;
+  color: #a1a1aa;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-top: 1px;
+}
+
+.empty-state {
+  padding: 32px 16px;
+  font-size: 13px;
+  color: #a1a1aa;
+  text-align: center;
+}
+
+.panel-footer {
+  flex-shrink: 0;
+  padding: 10px 14px;
+  border-top: 1px solid #e4e4e7;
+  background: #fafafa;
+}
+
+.hide-button {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid #e4e4e7;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #71717a;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.16s cubic-bezier(0.34, 1.56, 0.64, 1), background 120ms ease,
+    color 120ms ease, border-color 120ms ease;
+}
+
+.hide-button:hover {
+  background: #fef2f2;
+  color: #b91c1c;
+  border-color: #fecaca;
+}
+
+.hide-button:active {
+  transform: scale(0.97);
+}
+
+.hide-button svg {
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+
+.status {
+  flex-shrink: 0;
+  display: none;
+  padding: 8px 14px;
+  border-top: 1px solid #fecaca;
+  background: #fef2f2;
+  color: #b91c1c;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status.visible {
+  display: block;
+}
