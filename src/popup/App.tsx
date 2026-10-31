@@ -442,16 +442,40 @@ function ModeMenu({
     trigger = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     if (!open) return;
-    const rect = trigger.current!.getBoundingClientRect();
-    setPosition({
-      left: Math.max(8, Math.min(rect.right - 116, window.innerWidth - 124)),
-      top: rect.bottom + 154 > window.innerHeight ? Math.max(8, rect.top - 154) : rect.bottom + 5,
-    });
+    const updatePosition = () => {
+      if (!trigger.current) return;
+      const zoom = parseFloat(getComputedStyle(document.documentElement).zoom) || 1;
+      const rect = trigger.current.getBoundingClientRect();
+      const menuWidth = 116;
+      const menuHeight = 114;
+      const triggerRight = rect.right / zoom;
+      const triggerTop = rect.top / zoom;
+      const triggerBottom = rect.bottom / zoom;
+      const viewportHeight = window.innerHeight / zoom;
+      const viewportWidth = window.innerWidth / zoom;
+
+      const showAbove =
+        triggerBottom + menuHeight + 8 > viewportHeight && triggerTop - menuHeight - 8 >= 0;
+
+      setPosition({
+        left: Math.round(
+          Math.max(8, Math.min(triggerRight - menuWidth, viewportWidth - menuWidth - 8)),
+        ),
+        top: Math.round(showAbove ? triggerTop - menuHeight - 4 : triggerBottom + 4),
+      });
+    };
+    updatePosition();
     const close = (e: PointerEvent) => {
       if (!wrapper.current?.contains(e.target as Node)) setOpen(false);
     };
     document.addEventListener('pointerdown', close);
-    return () => document.removeEventListener('pointerdown', close);
+    window.addEventListener('scroll', updatePosition, true);
+    window.addEventListener('resize', updatePosition);
+    return () => {
+      document.removeEventListener('pointerdown', close);
+      window.removeEventListener('scroll', updatePosition, true);
+      window.removeEventListener('resize', updatePosition);
+    };
   }, [open]);
   return (
     <div
