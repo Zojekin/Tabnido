@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { ALARM, createService } from '../src/background/service';
+import { ALARM, activeIcons, pausedIcons, createService } from '../src/background/service';
 import { contentSender, mockChrome, popupSender, record } from './chrome';
 import { defaults } from '../src/shared/model';
 afterEach(() => {
@@ -49,17 +49,17 @@ describe('T01, T09, T21 startup and alarm lifecycle', () => {
       delayInMinutes: 9,
       periodInMinutes: 9,
     });
-    expect(api.action.setBadgeText).toHaveBeenCalledWith({ text: '1.5h' });
-    expect(api.action.setBadgeBackgroundColor).toHaveBeenCalledWith({ color: '#111111' });
+    expect(api.action.setIcon).toHaveBeenCalledWith({ path: activeIcons });
+    expect(api.action.setBadgeText).toHaveBeenCalledWith({ text: '' });
     api.alarms.clear.mockClear();
-    api.action.setBadgeText.mockClear();
+    api.action.setIcon.mockClear();
     expect(
       await service.dispatch({ type: 'saveInactivityDisabledState', body: true }, popupSender),
     ).toEqual({ ok: true, data: true });
     expect(data.inactive_tabs_threshold_disabled).toBe(true);
     expect(api.alarms.clear).not.toHaveBeenCalled();
-    expect(api.action.setBadgeText).toHaveBeenCalledWith({ text: 'OFF' });
-    expect(api.action.setBadgeBackgroundColor).toHaveBeenCalledWith({ color: '#747474' });
+    expect(api.action.setIcon).toHaveBeenCalledWith({ path: pausedIcons });
+    expect(api.action.setBadgeText).toHaveBeenCalledWith({ text: '' });
   });
   it('does not recreate an identical alarm', async () => {
     const { api } = mockChrome({ inactive_tabs_settings: { value: 1, unit: 'hours' } });

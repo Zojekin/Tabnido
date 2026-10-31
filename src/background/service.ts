@@ -27,6 +27,20 @@ import {
 } from '../shared/protocol';
 import { queue, read, write } from '../storage/local';
 
+export const activeIcons = {
+  16: 'icon/16.png',
+  32: 'icon/32.png',
+  48: 'icon/48.png',
+  96: 'icon/96.png',
+  128: 'icon/128.png',
+};
+export const pausedIcons = {
+  16: 'icon/gray/16.png',
+  32: 'icon/gray/32.png',
+  48: 'icon/gray/48.png',
+  96: 'icon/gray/96.png',
+  128: 'icon/gray/128.png',
+};
 export const ALARM = 'awake_time_checkpoint_and_sweep';
 export function createService() {
   const trackedQueue = queue(),
@@ -86,12 +100,11 @@ export function createService() {
         read('inactive_tabs_threshold_disabled'),
       ]);
       const isPaused = disabled === true || !threshold;
-      const text = formatBadgeText(threshold, isPaused);
-      const color = isPaused ? '#747474' : '#111111';
-      await chrome.action.setBadgeText({ text });
-      await chrome.action.setBadgeBackgroundColor({ color });
-      if (typeof (chrome.action as any).setBadgeTextColor === 'function') {
-        await (chrome.action as any).setBadgeTextColor({ color: '#ffffff' });
+      if (chrome.action.setIcon) {
+        await chrome.action.setIcon({ path: isPaused ? pausedIcons : activeIcons });
+      }
+      if (chrome.action.setBadgeText) {
+        await chrome.action.setBadgeText({ text: '' });
       }
     } catch {
       /* Ignored when running outside Chrome */

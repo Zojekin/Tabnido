@@ -84,6 +84,7 @@ export function mockChrome(
       onAlarm: event(),
     },
     action: {
+      setIcon: vi.fn(async () => {}),
       setBadgeText: vi.fn(async () => {}),
       setBadgeBackgroundColor: vi.fn(async () => {}),
       setBadgeTextColor: vi.fn(async () => {}),
