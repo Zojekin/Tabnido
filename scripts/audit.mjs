@@ -1,6 +1,5 @@
 import { readFile, readdir, stat } from 'node:fs/promises';
 import { resolve, relative, join } from 'node:path';
-import { createHash } from 'node:crypto';
 import assert from 'node:assert/strict';
 const root = process.cwd(),
   dist = resolve(root, 'dist');
@@ -58,22 +57,11 @@ for (const path of await files(dist)) {
 }
 const locales = await readdir(join(dist, '_locales'));
 assert.deepEqual(locales.sort(), ['en', 'zh_CN']);
-const baseline = await json(join(root, 'original-sha256.json')),
-  original = resolve(root, '../Tabsence-1.1.1');
-assert.equal((await files(original)).length, baseline.length, 'Original file count changed');
-for (const item of baseline) {
-  const hash = createHash('sha256')
-    .update(await readFile(join(original, item.path)))
-    .digest('hex')
-    .toUpperCase();
-  assert.equal(hash, item.sha256, `Original changed: ${item.path}`);
-}
 console.log(
   JSON.stringify(
     {
       status: 'PASS',
       manifestPaths: references.length,
-      originalFilesUnchanged: baseline.length,
       builtFiles: (await files(dist)).length,
       literalUrls: [...urlList],
       browserAcceptance: 'NOT ASSESSED BY STATIC AUDIT',

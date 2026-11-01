@@ -42,7 +42,7 @@ npm ci
 npm run check
 ```
 
-`npm run check` 执行 TypeScript 检查、78 项测试、构建和产物审计。`scripts/audit.mjs` 会额外验证同级原始 `Tabsence-1.1.1` 的文件哈希；独立移动项目后，该原始参考目录不再存在时仅运行 typecheck/test/build 即可。
+`npm run check` 执行 TypeScript 检查、79 项测试、构建和产物安全合规审计（检查 Manifest V3 规范、资源引用完整性及防止敏感/商业代码残留）。
 
 `scripts/browser-check.mjs` 是本机 Chromium/Playwright 验收脚本，使用单独的 `qa/browser-profile` 和测试数据，不操作用户日常浏览器。它会重置该测试配置中的插件数据，并测试真实 chrome.storage、后台消息和 tabs.create 恢复。运行前请检查脚本中的本机运行库路径。
 
