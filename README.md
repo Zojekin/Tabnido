@@ -1,53 +1,43 @@
-# Tabnido 1.0.0
+<div align="center">
 
-由 Tabtab 独立复制并改造的 Manifest V3 浏览器插件。四页 UI 以 2026-10-31 确认的终稿为准；原 Tabtab 文件夹保留。
+  <img src="public/brand/logo.svg" alt="Tabnido Logo" width="280" />
 
-## 安装
+  <p><strong>基于真实物理交互检测的智能闲置标签页自动收纳扩展</strong></p>
 
-1. 在 Chrome 打开 `chrome://extensions`，或在 Edge 打开 `edge://extensions`。
-2. 开启开发者模式，选择「加载已解压的扩展程序」。
-3. 选择本文件夹中的 **dist** 文件夹（包含 manifest.json）。
-4. 固定 Tabnido 图标，然后打开插件。
+  <p>
+    <a href="LICENSE"><img src="https://img.shields.io/badge/License-GPL%20v3.0-blue.svg" alt="License: GPL v3" /></a>
+    <img src="https://img.shields.io/badge/Manifest-V3-success.svg" alt="Manifest V3" />
+    <a href="https://github.com/Zojekin/tabnido/releases"><img src="https://img.shields.io/badge/Release-1.0.0-orange.svg" alt="Release 1.0.0" /></a>
+  </p>
 
-`tabnido-1.0.0.zip` 为同一构建产物，解压后也可以加载。
+</div>
 
-新路径通常产生独立的扩展 ID；旧插件的数据不会自动迁移。原数据仍保留在旧插件中。日常使用时先停用旧 Tabtab/Tabsence，避免两个插件同时执行自动关闭。
+---
 
-## 功能
+## 功能亮点
 
-- 时长：直接输入有效数值后自动保存，上下箭头微调；切换单位会将数值限制在对应范围。范围支持：1–60 分钟、1–23 小时、1–30 天、1–12 月。
-- 浏览器工具栏图标：扩展图标常驻显示 Action Badge 状态，运行监控时显示时长缩写（分钟使用 m，月份使用 mo，如 1m、15m、1h、1mo），暂停状态显示低调灰色 `OFF`。
-- 视觉与微动效：界面整体采用 0.88 比例等比收敛优化，适配高分屏；全站融入成熟、克制且敏捷的轻量物理微交互反馈（100–180ms，支持减弱动效偏好）。
-- 首次打开只展示 1 小时，不会自动开启关闭功能；可用底部开关启用，或修改时长后启用配置。暂停状态在修改时长后保持暂停。
-- 白名单：域名原位编辑，Enter 或离开输入框后保存；Escape 取消未提交编辑；匹配类型选择和删除自动保存。新增空白项在输入有效域名前不会写入。最多 50 条，沿用既有域名规范化及匹配逻辑。
-- 归档：最多 500 条；按时间从新到旧展示，搜索标题或网址，恢复记录；网站图标只显示在标题前。使用 Chrome 本地 favicon 接口，无额外远程图标服务。
-- 设置：开关立即保存，保存失败会恢复此前状态并提示。
-- 中英文、浅深色主题、键盘焦点和错误提示。
+- **真实动作探测**：深入网页底层监听按键、点击、拖动与页面滚动等物理操作，精准识别真实阅读与使用状态，告别仅靠切前后台导致的机械误关。
+- **灵活时长粒度**：支持多维度自定义闲置关闭时间，支持 1–60 分钟、1–23 小时、1–30 天以及 1–12 个月。
+- **常驻状态徽标**：浏览器工具栏图标实时呈现运行监控状态（如 `15m`、`1h`），暂停时显示低调灰色 `OFF`。
+- **域名白名单保护**：支持域名原位即时编辑与匹配规则保护，重要工作页面绝不误关。
+- **可搜索历史归档**：自动保留多达 500 条历史归档记录，支持按标题与网址实时检索，一键恢复已关标签。
+- **纯本地隐私安全**：零外部远程网络依赖、零分析遥测与用户追踪，所有配置与归档数据 100% 留存在本地浏览器存储中。
+- **适配高分屏与双色主题**：精心打磨的微交互反馈与紧凑布局，原生适配浅色与深色系统主题。
 
-## 文件
+---
 
-- `dist/`：可直接加载的插件。
-- `src/`：React/TypeScript 源码；后台关闭、活动跟踪、归档逻辑沿用原项目。
-- `design-final/`：已确认的四页独立设计参考，首页数字已下移 8px。
-- `qa/shots/`：真实插件页面截图。
-- `qa/browser-report.json`：实际 MV3 插件验收结果。
-- `licenses/`：Lucide 和品牌字标字体许可；发行目录也包含许可。
+## 安装与使用
 
-## 开发与验证
+1. 前往 [Releases](https://github.com/Zojekin/tabnido/releases) 页面，下载最新的发布包 `tabnido-1.0.0.zip` 并解压到本地；
+2. 打开 Chromium 内核浏览器（如 Google Chrome、Microsoft Edge 等）：
+   - Chrome 地址栏输入 `chrome://extensions`
+   - Edge 地址栏输入 `edge://extensions`
+3. 开启页面右上角的 **「开发者模式」**；
+4. 点击左上角的 **「加载已解压的扩展程序」**，选择刚才解压出来的文件夹；
+5. 在浏览器工具栏固定 **Tabnido** 图标，点击即可展开配置。
 
-需要 Node.js 24 或以上。
-
-```powershell
-npm ci
-npm run check
-```
-
-`npm run check` 执行 TypeScript 检查、79 项测试、构建和产物安全合规审计（检查 Manifest V3 规范、资源引用完整性及防止敏感/商业代码残留）。
-
-`scripts/browser-check.mjs` 是本机 Chromium/Playwright 验收脚本，使用单独的 `qa/browser-profile` 和测试数据，不操作用户日常浏览器。它会重置该测试配置中的插件数据，并测试真实 chrome.storage、后台消息和 tabs.create 恢复。运行前请检查脚本中的本机运行库路径。
-
-本轮已通过 78 项自动化测试、静态审计和真实 Chromium 插件验收；未在用户日常 Chrome/Edge 配置中安装，也未重新进行长时间闲置计时实测。
+---
 
 ## 开源协议
 
-本项目采用 [GNU General Public License v3.0 (GPL-3.0)](LICENSE) 开源。第三方字体与图标资产遵循各自的原生许可（详见 `licenses/` 目录）。
+本项目采用 [GNU General Public License v3.0 (GPL-3.0)](LICENSE) 开源协议。第三方字体与图标资产遵循各自的原生开源许可（详见 `licenses/` 目录）。
