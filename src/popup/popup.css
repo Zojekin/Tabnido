@@ -436,7 +436,7 @@ h2 {
   font-size: 14px;
   color: var(--muted);
   cursor: pointer;
-  border-radius: 6px;
+  border-radius: 0;
   transition:
     background-color 0.15s ease,
     color 0.15s ease,
