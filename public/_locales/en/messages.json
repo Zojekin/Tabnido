@@ -1,8 +1,8 @@
 {
   "extName": {
-    "message": "Tabnido: Auto Close Inactive Tabs"
+    "message": "Tabnido"
   },
   "extDescription": {
-    "message": "Automatically close inactive tabs and restore them from a searchable archive. Local edition."
+    "message": "Auto-closes idle tabs detected via real interactions (scroll, click); supports custom timers, whitelists, and fast restore."
   }
 }
