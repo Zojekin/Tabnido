@@ -12,6 +12,8 @@
     "build": "node scripts/build.mjs",
     "audit:dist": "node scripts/audit.mjs",
     "check": "npm run typecheck && npm test && npm run build && npm run audit:dist",
+    "pack": "node scripts/pack.mjs",
+    "ship": "npm run check && npm run pack",
     "format": "prettier --write src tests scripts public *.json *.html *.ts *.md",
     "format:check": "prettier --check src tests scripts public *.json *.html *.ts *.md"
   },
