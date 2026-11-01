@@ -47,3 +47,7 @@ npm run check
 `scripts/browser-check.mjs` 是本机 Chromium/Playwright 验收脚本，使用单独的 `qa/browser-profile` 和测试数据，不操作用户日常浏览器。它会重置该测试配置中的插件数据，并测试真实 chrome.storage、后台消息和 tabs.create 恢复。运行前请检查脚本中的本机运行库路径。
 
 本轮已通过 78 项自动化测试、静态审计和真实 Chromium 插件验收；未在用户日常 Chrome/Edge 配置中安装，也未重新进行长时间闲置计时实测。
+
+## 开源协议
+
+本项目采用 [GNU General Public License v3.0 (GPL-3.0)](LICENSE) 开源。第三方字体与图标资产遵循各自的原生许可（详见 `licenses/` 目录）。
